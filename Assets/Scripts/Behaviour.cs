@@ -17,6 +17,8 @@ public class Behaviour : MonoBehaviour
     public float rotationSpeed = 1.0f;
     private float rotationInterval = 2.0f;
     private float nextRotationTime;
+    private float energy = 100f;
+    public float energy_loss = 2f;
 
     // Detection variables
     public float maxDetectionDistance = 20f;
@@ -80,9 +82,8 @@ public class Behaviour : MonoBehaviour
             transform.LookAt(target.transform.position);
 
             if (Vector3.Distance(transform.position, target.transform.position) < 2.0f){
-                Debug.Log("Comiendo");
                 Destroy(target);
-                Debug.Log("Devoro");
+                energy += 20;
             }
         }
         else{
@@ -92,6 +93,13 @@ public class Behaviour : MonoBehaviour
 
     void Update()
     {
+
+        energy -= energy_loss * Time.deltaTime;
+        if (energy <= 0){
+            Destroy(gameObject);
+        }
+
+
         rays.Clear();
         for (int i = 0; i < nRays; i++) // For loop to create multiple raycasts
         {
@@ -110,15 +118,21 @@ public class Behaviour : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, maxDetectionDistance))
             {
-                if (hit.collider.tag == "prey")
-                {
-                    target = hit.collider.gameObject;
-                    state = states.chase;
+                if (energy <= 75){
+                    if (hit.collider.tag == "prey")
+                    {
+                        target = hit.collider.gameObject;
+                        state = states.chase;
 
-                    target.GetComponent<Herbivore>().state = statesHerbivore.evade;
-                    
-                    target.GetComponent<Herbivore>().predator = gameObject;
-                }       
+                        target.GetComponent<Herbivore>().state = statesHerbivore.evade;
+                        
+                        target.GetComponent<Herbivore>().predator = gameObject;
+                    }       
+                }
+                else{
+                    // Todo lo q viene a ser el forniqueo
+                }
+                
             }
         }
         Boundaries();

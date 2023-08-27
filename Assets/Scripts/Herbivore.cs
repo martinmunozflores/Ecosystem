@@ -17,6 +17,8 @@ public class Herbivore : MonoBehaviour
     public float rotationSpeed = 1.0f;
     private float rotationInterval = 2.0f;
     private float nextRotationTime;
+    private float energy = 100f;
+    public float energy_loss = 2f;
 
 
     public bool chased = false;
@@ -89,9 +91,8 @@ public class Herbivore : MonoBehaviour
             transform.LookAt(target.transform.position);
 
             if (Vector3.Distance(transform.position, target.transform.position) < 2.0f){
-                Debug.Log("Comiendo");
                 Destroy(target);
-                Debug.Log("Devoro");
+                energy += 10;
             }
         }
         else{
@@ -108,6 +109,13 @@ public class Herbivore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        energy -= energy_loss * Time.deltaTime;
+
+        if (energy <= 0){
+            Destroy(gameObject);
+        }
+
         rays.Clear();
         for (int i = 0; i < nRays; i++) // For loop to create multiple raycasts
         {
@@ -127,17 +135,23 @@ public class Herbivore : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, maxDetectionDistance))
             {
-                if (hit.collider.tag == "herb")
-                {
-                    if(Vector3.Distance(transform.position, hit.collider.gameObject.transform.position) < minDistance)
+                if (energy <= 75){
+                    if (hit.collider.tag == "herb")
                     {
-                        minDistance = Vector3.Distance(transform.position, hit.collider.gameObject.transform.position);
-                        target = hit.collider.gameObject;
-                        state = statesHerbivore.chase;
-                    }
-                    
-                }  
-                else if  (hit.collider.tag == "predator")
+                        if(Vector3.Distance(transform.position, hit.collider.gameObject.transform.position) < minDistance)
+                        {
+                            minDistance = Vector3.Distance(transform.position, hit.collider.gameObject.transform.position);
+                            target = hit.collider.gameObject;
+                            state = statesHerbivore.chase;
+                        }
+                    }  
+                }
+                else{
+                    // Todo lo q es fornique
+                }
+                
+                // Dejar este if al final para priorizar escapar de un depredador
+                if  (hit.collider.tag == "predator")
                 {
                     if(Vector3.Distance(transform.position, hit.collider.gameObject.transform.position) < minDistance)
                     {
