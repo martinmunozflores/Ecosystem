@@ -120,4 +120,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   go_Grass: {fileID: 8340658262751846102}
   reproduction_time: 5
+  death_time: 10
   radio: 5
