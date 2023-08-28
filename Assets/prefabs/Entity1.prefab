@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5830677430123118555}
   - component: {fileID: 3175006745911444365}
   - component: {fileID: 4952581823585217350}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Entity1
   m_TagString: predator
   m_Icon: {fileID: 0}

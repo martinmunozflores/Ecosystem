@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6943894338155803553}
   - component: {fileID: 8052997283426770998}
   - component: {fileID: 265907379764519102}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Entity3
   m_TagString: herb
   m_Icon: {fileID: 0}
@@ -119,5 +119,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   go_Grass: {fileID: 8340658262751846102}
-  reproduction_time: 5
+  reproduction_time: 8
   radio: 5

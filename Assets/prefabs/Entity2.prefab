@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8431146149612867194}
   - component: {fileID: 518807520750952561}
   - component: {fileID: 234356945052492906}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Entity2
   m_TagString: prey
   m_Icon: {fileID: 0}
@@ -149,6 +149,7 @@ MonoBehaviour:
   state: 0
   speed: 4
   rotationSpeed: 180
+  energy_loss: 2
   chased: 0
   boxDistance: 60
   maxDetectionDistance: 20
